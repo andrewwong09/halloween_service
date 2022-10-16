@@ -18,6 +18,7 @@ initial_state = None
 
 
 def detect_motion(frame):
+    print("enter detect motion")
     global initial_state
     gray_image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray_frame = cv2.GaussianBlur(gray_image, (21, 21), 0)
@@ -51,11 +52,14 @@ def detect_motion(frame):
 
     if num_moving_obj > 0:
         print(f"{date_time}: Found {num_moving_obj} moving objects")
-        if hw.in_between(now.time()):
-            p = Process(target=mr.run_motor)
-            p.start()
         cv2.imwrite(f"{os.path.join(cache_dir, date_time)}_5.jpg", 
                     frame.astype('uint8'))
+        if hw.in_between(now.time()):
+            p1 = Process(target=mr.run_motor)
+            p1.start()
+            p2 = Process(target=hw.play_sound)
+            p2.start()
+
 
 def start():
     global initial_state
