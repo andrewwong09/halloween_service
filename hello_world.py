@@ -2,10 +2,18 @@ import os
 import time
 import vlc
 from multiprocessing import Process
+import datetime
+
 
 import cam as ca
 
 os.system('amixer controls')
+
+def in_between(now, start=datetime.time(16, 30), end=datetime.time(19, 30)):
+    if start <= end:
+        return start <= now < end
+    else: # over midnight e.g., 23:30-04:15
+        return start <= now or now < end
 
 
 def play_music():

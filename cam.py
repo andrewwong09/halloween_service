@@ -7,6 +7,7 @@ from multiprocessing import Process
 
 
 import motor_run as mr 
+import hello_world as hw
 
 
 cache_dir = '/home/andrew/cache'
@@ -50,8 +51,9 @@ def detect_motion(frame):
 
     if num_moving_obj > 0:
         print(f"{date_time}: Found {num_moving_obj} moving objects")
-        p = Process(target=mr.run_motor)
-        p.start()
+        if hw.in_between(now.time()):
+            p = Process(target=mr.run_motor)
+            p.start()
         cv2.imwrite(f"{os.path.join(cache_dir, date_time)}_5.jpg", 
                     frame.astype('uint8'))
 
