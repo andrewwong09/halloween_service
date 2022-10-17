@@ -12,6 +12,10 @@ ExecStart=/home/andrew/scripts/hallo_exec.sh
 Restart=on-abort
 
 [Install]
+WantedBy=multi-user.target
 ```
 
-sudo systemctl add halloween.service
+```
+sudo systemctl start halloween.service
+sudo systemctl enable halloween.service
+```
