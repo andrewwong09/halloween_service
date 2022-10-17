@@ -18,7 +18,6 @@ initial_state = None
 
 
 def detect_motion(frame):
-    print("enter detect motion")
     global initial_state
     gray_image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray_frame = cv2.GaussianBlur(gray_image, (21, 21), 0)

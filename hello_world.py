@@ -7,7 +7,10 @@ import random
 
 import cam as ca
 
+
 os.system('amixer controls')
+working_dir = '/home/andrew/scripts'
+sound_process_file = os.path.join(working_dir, 'play_sound_running.txt')
 
 def in_between(now, start=datetime.time(16, 30), end=datetime.time(19, 30)):
     if start <= end:
@@ -32,8 +35,9 @@ def play_music():
             print(duration)
             time.sleep(duration)
 
+
 def play_sound():
-    with open('play_sound_running.txt', 'r+') as f:
+    with open(sound_process_file, 'r+') as f:
         first_line = f.readline()
         if 'running' in first_line:
             return
@@ -57,13 +61,15 @@ def play_sound():
     time.sleep(duration)
     player.stop()
 
-    with open('play_sound_running.txt', 'w') as f:
+    with open(sound_process_file, 'w') as f:
         f.write('silent')
-
     return
 
 
 if __name__ == '__main__':
+    with open(sound_process_file, 'w') as f:
+        f.write('silent')
+
     p = Process(target=ca.start)
     p.start()
     #play_music()

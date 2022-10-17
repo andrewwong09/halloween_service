@@ -12,6 +12,7 @@ def init_pins():
     GPIO.output(pwr_pin, GPIO.HIGH)
 
 def run_motor(time_s=4):
+    GPIO.setwarnings(False)
     init_pins()
     GPIO.output(enable_pin, GPIO.HIGH)
     time.sleep(time_s)
