@@ -28,3 +28,28 @@ WantedBy=default.target
 
 ```
 
+
+## Also add  repeating thunder noise to stop bluetooth speaker auto-disconnect
+
+- Add below to: ~/.config/systemd/user/bluetooth_buzz.service
+
+```
+[Unit]
+Description=Bluetooth Buzz to maintain connection
+
+[Service]
+ExecStart=/home/andrew/scripts/hallo_bt.sh
+Restart=always
+RestartSec=90
+
+[Install]
+WantedBy=default.target
+
+```
+
+- And execute below to enable and start on boot:
+```
+systemctl --user enable bluetooth_buzz.service
+systemctl --user start bluetooth_buzz.service
+sudo loginctl enable-linger <user>
+```
