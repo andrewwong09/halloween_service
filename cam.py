@@ -7,7 +7,7 @@ from multiprocessing import Process
 
 
 import motor_run as mr 
-import hello_world as hw
+import hallo_world as hw
 
 
 cache_dir = '/home/andrew/cache'
