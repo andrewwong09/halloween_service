@@ -1,21 +1,24 @@
 import cv2
 import time
 import os
+import logging
 from datetime import datetime
-import numpy as np
 from multiprocessing import Process
 
+import numpy as np
 
 import motor_run as mr 
 import hallo_world as hw
 
 
 cache_dir = '/home/andrew/cache'
-
 cam = cv2.VideoCapture(0)
-
 initial_state = None
-
+logging.basicConfig(filename='/home/andrew/scripts/logs/cam.log',
+                    format='%(asctime)s %(message)s',
+                    datefmt='%m/%d/%Y %I:%M:%S %p',
+                    encoding='utf-8',
+                    level=logging.DEBUG)
 
 def detect_motion(frame):
     global initial_state
@@ -50,9 +53,8 @@ def detect_motion(frame):
         cv2.rectangle(frame, (cur_x, cur_y), (cur_x + cur_w, cur_y + cur_h), (0, 255, 0), 3)
 
     if num_moving_obj > 0:
-        print(f"{date_time}: Found {num_moving_obj} moving objects")
-        cv2.imwrite(f"{os.path.join(cache_dir, date_time)}_5.jpg", 
-                    frame.astype('uint8'))
+        logging.info(f"Found {num_moving_obj} moving objects.")
+        cv2.imwrite(f"{os.path.join(cache_dir, date_time)}.jpg", frame.astype('uint8'))
         if hw.in_between(now.time()):
             p1 = Process(target=mr.run_motor)
             p1.start()

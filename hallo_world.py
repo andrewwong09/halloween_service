@@ -1,9 +1,11 @@
 import os
 import time
-import vlc
+import logging
 from multiprocessing import Process
 import datetime
 import random
+
+import vlc
 
 import cam as ca
 
@@ -11,6 +13,13 @@ import cam as ca
 os.system('amixer controls')
 working_dir = '/home/andrew/scripts'
 sound_process_file = os.path.join(working_dir, 'play_sound_running.txt')
+
+logging.basicConfig(filename='/home/andrew/scripts/logs/hallo.log',
+                    format='%(asctime)s %(message)s',
+                    datefmt='%m/%d/%Y %I:%M:%S %p',
+                    encoding='utf-8',
+                    level=logging.DEBUG)
+
 
 def in_between(now, start=datetime.time(16, 30), end=datetime.time(19, 30)):
     if start <= end:
@@ -52,7 +61,8 @@ def play_sound():
 if __name__ == '__main__':
     with open(sound_process_file, 'w') as f:
         f.write('silent')
-
+    logging.info('Hallo World Main entry.') 
     p = Process(target=ca.start)
     p.start()
+    logging.info('Hallo World Cam process started')
     p.join() # This will likely never be reached
