@@ -15,7 +15,7 @@ working_dir = '/home/andrew/scripts'
 sound_process_file = os.path.join(working_dir, 'play_sound_running.txt')
 
 logging.basicConfig(filename='/home/andrew/scripts/logs/hallo.log',
-                    format='%(asctime)s %(message)s',
+                    format='%(asctime)s, %(module)s, %(levelname)s: %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p',
                     encoding='utf-8',
                     level=logging.DEBUG)
@@ -48,8 +48,8 @@ def play_sound():
     player.play()
     time.sleep(0.5)
     duration = player.get_length()
-    if duration > 30:
-        duration = 30
+    if duration > 45:
+        duration = 45
     time.sleep(duration)
     player.stop()
 

@@ -5,13 +5,13 @@ import logging
 import vlc
 
 
-logging.basicConfig(filename='/home/andrew/scripts/logs/bt_buzz.log', 
-                    format='%(asctime)s %(message)s', 
+os.system('amixer controls')
+
+logging.basicConfig(filename='/home/andrew/scripts/logs/hallo.log',
+                    format='%(asctime)s, %(module)s, %(levelname)s: %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p',
                     encoding='utf-8',
                     level=logging.DEBUG)
-
-os.system('amixer controls')
 
 
 def play_sound():

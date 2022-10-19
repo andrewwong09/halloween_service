@@ -1,9 +1,9 @@
 import cv2
 import time
 import os
-import logging
 from datetime import datetime
 from multiprocessing import Process
+import logging
 
 import numpy as np
 
@@ -14,11 +14,7 @@ import hallo_world as hw
 cache_dir = '/home/andrew/cache'
 cam = cv2.VideoCapture(0)
 initial_state = None
-logging.basicConfig(filename='/home/andrew/scripts/logs/cam.log',
-                    format='%(asctime)s %(message)s',
-                    datefmt='%m/%d/%Y %I:%M:%S %p',
-                    encoding='utf-8',
-                    level=logging.DEBUG)
+
 
 def detect_motion(frame):
     global initial_state
