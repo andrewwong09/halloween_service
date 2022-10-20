@@ -15,7 +15,7 @@ working_dir = '/home/andrew/scripts'
 sound_process_file = os.path.join(working_dir, 'play_sound_running.txt')
 
 logging.basicConfig(filename='/home/andrew/scripts/logs/hallo.log',
-                    format='%(asctime)s, %(module)s, %(levelname)s: %(message)s',
+                    format='%(asctime)s, %(levelname)s (%(module)s): %(message)s',
                     datefmt='%m/%d/%Y %I:%M:%S %p',
                     encoding='utf-8',
                     level=logging.DEBUG)

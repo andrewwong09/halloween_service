@@ -26,7 +26,7 @@ def detect_motion(frame):
         return
 
     now = datetime.now() # current date and time
-    date_time = now.strftime("%m%d%Y_%H%M%S")
+    date_time = now.strftime("%m%d%Y_%H%M%S.%f")[:-3]
 
     differ_frame = cv2.absdiff(initial_state, gray_frame)
     
@@ -69,6 +69,6 @@ def start():
         rot_image = cv2.rotate(image, cv2.ROTATE_90_CLOCKWISE)
         detect_motion(rot_image)
 
-        time.sleep(0.1)
+        time.sleep(0.3)
         count = count + 1
     cam.release()
