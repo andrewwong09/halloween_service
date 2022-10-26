@@ -68,13 +68,15 @@ def detect_motion(frame):
         if cv2.contourArea(cur) < 10000:
             continue
 
+        color = (255, 0, 0)
         if not in_excluded_region(cur):
             num_moving_obj += 1
+            color = (0, 255, 0)
 
         (cur_x, cur_y, cur_w, cur_h) = cv2.boundingRect(cur)
 
         # To create a rectangle of green color around the moving object  
-        cv2.rectangle(frame, (cur_x, cur_y), (cur_x + cur_w, cur_y + cur_h), (0, 255, 0), 3)
+        cv2.rectangle(frame, (cur_x, cur_y), (cur_x + cur_w, cur_y + cur_h), color, 3)
 
     if num_moving_obj > 0:
         logging.info(f"Found {num_moving_obj} moving objects.")
