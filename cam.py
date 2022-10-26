@@ -18,15 +18,16 @@ initial_state = None
 
 
 def in_excluded_region(contour, configs_path='/home/andrew/scripts/configs.json'):
+    M = cv2.moments(contour)
+    
     exclusion_contours = []
     with open(configs_path, 'r') as f:
         configs = json.load(f)
-        for contour in configs['exclusion_zones']:
-            ctr = np.array(contour).reshape((-1, 1, 2)).astype(np.int32)
+        for ex_contour in configs['exclusion_zones']:
+            ctr = np.array(ex_contour).reshape((-1, 1, 2)).astype(np.int32)
             exclusion_contours.append(ctr)
 
     in_excluded_contour = False
-    M = cv2.moments(np.array(contour))
     if M['m00'] != 0:
         cx = int(M['m10']/M['m00'])
         cy = int(M['m01']/M['m00'])
