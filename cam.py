@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 from multiprocessing import Process
 import logging
+import json
 
 import numpy as np
 
@@ -14,6 +15,29 @@ import hallo_world as hw
 cache_dir = '/home/andrew/cache'
 cam = cv2.VideoCapture(0)
 initial_state = None
+
+
+def in_excluded_region(contour, configs_path='/home/andrew/scripts/configs.json'):
+    exclusion_contours = []
+    with open(configs_path, 'r') as f:
+        configs = json.load(f)
+        for contour in configs['exclusion_zones']:
+            ctr = np.array(contour).reshape((-1, 1, 2)).astype(np.int32)
+            exclusion_contours.append(ctr)
+
+    in_excluded_contour = False
+    M = cv2.moments(np.array(contour))
+    if M['m00'] != 0:
+        cx = int(M['m10']/M['m00'])
+        cy = int(M['m01']/M['m00'])
+
+        for ex_cnt in exclusion_contours:
+            result = cv2.pointPolygonTest(ex_cnt, (cx, cy), False)
+            if result >= 0:
+                in_excluded_contour = True
+                logging.info(f"({cx}, {cy}) found in exclusion contours.")
+                break
+    return in_excluded_contour
 
 
 def detect_motion(frame):
@@ -42,7 +66,10 @@ def detect_motion(frame):
     for cur in cont:
         if cv2.contourArea(cur) < 10000:
             continue
-        num_moving_obj += 1
+
+        if not in_excluded_region(cur):
+            num_moving_obj += 1
+
         (cur_x, cur_y, cur_w, cur_h) = cv2.boundingRect(cur)
 
         # To create a rectangle of green color around the moving object  
