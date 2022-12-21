@@ -21,7 +21,7 @@ logging.basicConfig(filename='/home/andrew/scripts/logs/hallo.log',
                     level=logging.DEBUG)
 
 
-def in_between(now, start=datetime.time(16, 30), end=datetime.time(19, 30)):
+def in_between(now, start=datetime.time(16, 15), end=datetime.time(19, 0)):
     if start <= end:
         return start <= now < end
     else: # over midnight e.g., 23:30-04:15
@@ -40,12 +40,13 @@ def play_sound():
     songs = [s for s in os.listdir('/home/andrew/Music/') if '.mp3' in s]
     s = random.choice(songs)
     print(s)
-    vol = 80
+    vol = 90
     if 'vol' in s:
         vol = int(s.split('vol')[1][:3])
     os.system(f'amixer cset numid=1 {vol}%')
     player = vlc.MediaPlayer(f'/home/andrew/Music/{s}')
     player.play()
+    logging.info(f'Playing: {s}')
     time.sleep(0.5)
     duration = player.get_length()
     if duration > 45:
