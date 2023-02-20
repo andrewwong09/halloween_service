@@ -51,7 +51,7 @@ def detect_motion(frame):
         return
 
     now = datetime.now() # current date and time
-    date_time = now.strftime("%m%d%Y_%H%M%S.%f")[:-3]
+    date_time = now.strftime("%Y%m%d_%H%M%S.%f")[:-3]
 
     differ_frame = cv2.absdiff(initial_state, gray_frame)
     
@@ -80,7 +80,11 @@ def detect_motion(frame):
 
     if num_moving_obj > 0:
         logging.info(f"Found {num_moving_obj} moving objects.")
-        cv2.imwrite(f"{os.path.join(cache_dir, date_time)}.jpg", frame.astype('uint8'))
+        dir_str = now.strftime("%Y%m%d")
+        directory = os.path.join(cache_dir, dir_str)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        cv2.imwrite(f"{os.path.join(directory, date_time)}.jpg", frame.astype('uint8'))
         if hw.in_between(now.time()):
             p1 = Process(target=mr.run_motor)
             p1.start()

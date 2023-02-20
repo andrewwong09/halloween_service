@@ -21,7 +21,7 @@ logging.basicConfig(filename='/home/andrew/scripts/logs/hallo.log',
                     level=logging.DEBUG)
 
 
-def in_between(now, start=datetime.time(16, 15), end=datetime.time(19, 0)):
+def in_between(now, start=datetime.time(9, 0), end=datetime.time(19, 0)):
     if start <= end:
         return start <= now < end
     else: # over midnight e.g., 23:30-04:15
@@ -49,8 +49,8 @@ def play_sound():
     logging.info(f'Playing: {s}')
     time.sleep(0.5)
     duration = player.get_length()
-    if duration > 45:
-        duration = 45
+    if duration > 120:
+        duration = 120
     time.sleep(duration)
     player.stop()
 
